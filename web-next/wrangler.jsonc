@@ -12,4 +12,7 @@
   "d1_databases": [
     { "binding": "DB", "database_name": "kzrdp-state", "database_id": "595c23f1-2728-4880-985a-ca8c8ee5a9a6" }
   ]
+  "vars": {
+    "NEXTAUTH_SECRET": "do+MMsrrZIlvd+HY7e92Zu59SQYGo6qZGBDorSdkJ5A="
+  },
 }
