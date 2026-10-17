@@ -1,5 +1,5 @@
 {
-  "name": "kzrdp-next",
+  "name": "kzrdp",
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-10-10",
   "compatibility_flags": ["nodejs_compat"],
