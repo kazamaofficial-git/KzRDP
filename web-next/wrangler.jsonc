@@ -1,4 +1,4 @@
-"NEXTAUTH_URL": "   https://rdp.kazamasite.biz.id"
+{
   "name": "kzrdp",
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-10-10",
@@ -11,5 +11,5 @@
   "preview_urls": false,
   "d1_databases": [
     { "binding": "DB", "database_name": "kzrdp-state", "database_id": "595c23f1-2728-4880-985a-ca8c8ee5a9a6" }
-  
+  ]
 }
