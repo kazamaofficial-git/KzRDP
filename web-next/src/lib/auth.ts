@@ -1,28 +1,35 @@
-import {SITE_HOST} from "./brand";
+import {SITE_HOST,SITE_ORIGIN} from "./brand";
+// Alamat situs berasal dari brand.ts. Menimpa NEXTAUTH_URL dari luar agar nilai yang salah format
+// (kutip, spasi, tanpa https) tidak bisa merusak login.
+process.env.NEXTAUTH_URL=SITE_ORIGIN;
 import type { NextAuthOptions } from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import Credentials from "next-auth/providers/credentials";
 import {recordCommunityLogin} from "./community";
 import {rateLimit} from "./db";
 import {createHash,timingSafeEqual} from "node:crypto";
+// Alasan penolakan login admin dicatat (tanpa data rahasia); lihat dengan: npx wrangler tail
+function deny(reason:string){console.warn("[admin-login] ditolak:",reason);return null;}
 export const authOptions: NextAuthOptions = {
  secret: process.env.NEXTAUTH_SECRET,
  providers: [
  GitHubProvider({clientId: process.env.GITHUB_ID || "", clientSecret: process.env.GITHUB_SECRET || "", authorization: {params: {scope: "read:user"}}}),
  Credentials({name:"Admin",credentials:{email:{label:"Email",type:"email"},password:{label:"Password",type:"password"},turnstile:{label:"Turnstile",type:"text"}},async authorize(c,req){
-  if(!c?.email||!c.password||!c.turnstile||c.password.length>256||c.turnstile.length>2048)return null;
-  if(!process.env.ADMIN_PASSWORD_HASH||!process.env.ADMIN_EMAIL||!process.env.ADMIN_CREDENTIAL_VERSION||!process.env.TURNSTILE_SECRET_KEY)return null;
+  if(!c?.email||!c.password||!c.turnstile||c.password.length>256||c.turnstile.length>2048)return deny("email/password/turnstile kosong atau terlalu panjang");
+  const missing=["ADMIN_PASSWORD_HASH","ADMIN_EMAIL","ADMIN_CREDENTIAL_VERSION","TURNSTILE_SECRET_KEY"].filter(k=>!process.env[k]);
+  if(missing.length)return deny("secret belum diisi: "+missing.join(", "));
   const ip=String(req.headers?.["cf-connecting-ip"]||"unknown");
   const bucket=createHash("sha256").update(ip).digest("hex");
-  if(!await rateLimit("admin:"+bucket,5,900))return null;
+  if(!await rateLimit("admin:"+bucket,5,900))return deny("terlalu banyak percobaan (maks 5 per 15 menit per IP)");
   const r=await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify",{method:"POST",body:new URLSearchParams({secret:process.env.TURNSTILE_SECRET_KEY,response:c.turnstile,remoteip:ip}),signal:AbortSignal.timeout(10000)});
-  const check=await r.json();if(!check.success||check.hostname!==SITE_HOST||check.action!=="admin_login")return null;
+  const check=await r.json();if(!check.success||check.hostname!==SITE_HOST||check.action!=="admin_login")return deny("turnstile gagal: success="+check.success+", hostname="+check.hostname+" (harus "+SITE_HOST+"), action="+check.action+", error="+JSON.stringify(check["error-codes"]||[]));
   const [salt,expected]=process.env.ADMIN_PASSWORD_HASH.split(":");
-  if(!salt||!expected)return null;
+  if(!salt||!expected)return deny("format ADMIN_PASSWORD_HASH salah (harus salt:hash)");
   const key=await crypto.subtle.importKey("raw",new TextEncoder().encode(c.password),"PBKDF2",false,["deriveBits"]);
   const result=await crypto.subtle.deriveBits({name:"PBKDF2",salt:new TextEncoder().encode(salt),iterations:100000,hash:"SHA-256"},key,256);
   const a=Buffer.from(result),z=Buffer.from(expected,"hex");
-  if(a.length!==z.length||!timingSafeEqual(a,z)||c.email.trim().toLowerCase()!==process.env.ADMIN_EMAIL.toLowerCase())return null;
+  if(a.length!==z.length||!timingSafeEqual(a,z))return deny("password tidak cocok dengan ADMIN_PASSWORD_HASH");
+  if(c.email.trim().toLowerCase()!==process.env.ADMIN_EMAIL.toLowerCase())return deny("email tidak cocok dengan ADMIN_EMAIL");
   return {id:"kzrdp-admin",name:"Admin",email:process.env.ADMIN_EMAIL};
  }})],
  session: {strategy: "jwt", maxAge: 30*24*60*60},
