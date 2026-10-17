@@ -1,4 +1,4 @@
-{
+"NEXTAUTH_URL": "   https://rdp.kazamasite.biz.id"
   "name": "kzrdp",
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-10-10",
@@ -15,5 +15,5 @@
   "vars": {
     "NEXTAUTH_SECRET": "do+MMsrrZIlvd+HY7e92Zu59SQYGo6qZGBDorSdkJ5A=",
     "NEXTAUTH_URL": "   https://rdp.kazamasite.biz.id"
-   },
+  },
 }
