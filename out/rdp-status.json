@@ -135,15 +135,15 @@
     ],
     "public_port": false
   },
-  "heartbeat_at": "2026-10-22T08:09:48.5691161Z",
+  "heartbeat_at": "2026-10-22T08:11:54.1111594Z",
   "statistik": {
     "ram_total_gb": 15.99,
-    "ram_used_gb": 6.89,
-    "ram_free_gb": 9.1,
+    "ram_used_gb": 6.81,
+    "ram_free_gb": 9.18,
     "disk_total_gb": 149.4,
     "disk_free_gb": 31.5,
-    "cpu_percent": 5,
-    "uptime_menit": 28,
-    "updated_at": "2026-10-22T08:09:48.5691604Z"
+    "cpu_percent": 16,
+    "uptime_menit": 30,
+    "updated_at": "2026-10-22T08:11:54.1112237Z"
   }
 }
