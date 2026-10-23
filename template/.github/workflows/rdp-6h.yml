@@ -1,0 +1,261 @@
+# kzrdp-workflow-schema: 6
+name: KzRDP — RDP 6 Jam
+'on':
+  workflow_dispatch:
+    inputs:
+      durasi_menit:
+        description: 'Durasi sesi dalam menit: ketik angka 10–360 (maks 6 jam, termasuk waktu persiapan)'
+        required: false
+        default: '360'
+        type: string
+      hostname:
+        description: 'Hostname sesi (dapat suffix nomor run, mis: kzrdp-42)'
+        required: false
+        default: kzrdp
+        type: string
+      rdp_user:
+        description: Username login RDP (3–20 karakter, huruf/angka/_/-)
+        required: false
+        default: kzadmin
+        type: string
+      token:
+        description: 'Token RDP (wajib): dibuat di dashboard dan sudah diverifikasi di grup Telegram'
+        required: true
+        type: string
+      github:
+        description: Username GitHub pemilik token (wajib, harus sama dengan akun yang membuat token)
+        required: true
+        type: string
+      email:
+        description: Email pemilik token (wajib, harus sama dengan email saat membuat token)
+        required: true
+        type: string
+      akses:
+        description: 'Jalur akses: tailscale (privat), tunnel (domain publik via server), atau portmap'
+        required: false
+        default: tailscale
+        type: choice
+        options:
+        - tailscale
+        - tunnel
+        - portmap
+      storage_boost:
+        description: 'Storage Boost: bebaskan 45-75GB (70GB -> 120GB+ free) dengan hapus Android/Haskell/CodeQL/cache'
+        required: false
+        default: false
+        type: boolean
+      debloat:
+        description: ' Debloat: hapus app bawaan gede (ringan=OneDrive/Xbox/Appx, full=+Edge ~1.5GB). Edge dihapus hanya jika Chrome ada'
+        required: false
+        default: ringan
+        type: choice
+        options:
+        - ringan
+        - full
+        - tidak
+      samp:
+        description: 'Dependensi saja: DirectX legacy x86/x64, Visual C++, DirectPlay/.NET bila tersedia. Game/client dipasang manual.'
+        required: false
+        default: true
+        type: boolean
+      win10:
+        description: Tweak tampilan Windows 10 (Server Manager mati, personalisasi, wallpaper, label)
+        required: false
+        default: false
+        type: boolean
+      xydesk:
+        description: Host setup XyDesk Remote (AVC444 + ClearType + multi-session + audio/mic + UDP 4433)
+        required: false
+        default: true
+        type: boolean
+      ekstra:
+        description: 'Ekstra otomatis: Lightshot + wallpaper + taskbar translucent'
+        required: false
+        default: false
+        type: boolean
+      devtools:
+        description: 'Tools dev: WinRAR, VC++ terbaru, XAMPP, aturan port 7777 (butuh beberapa menit; matikan jika tidak perlu)'
+        required: false
+        default: true
+        type: boolean
+      grafis:
+        description: Toolkit Mesa CPU opsional; bukan GPU fisik atau jaminan FPS/game. Tidak mengganti DLL Windows.
+        required: false
+        default: false
+        type: boolean
+      runner:
+        description: 'Versi Windows: windows-2025 (terbaru) atau windows-2022'
+        required: false
+        default: windows-2025
+        type: choice
+        options:
+        - windows-2025
+        - windows-2022
+      microphone:
+        description: Izinkan input mikrofon melalui kanal RDP (klien tetap meminta izin Android)
+        required: false
+        default: true
+        type: boolean
+      roblox:
+        description: Periksa kompatibilitas Roblox; tidak melewati pembatasan VM atau Windows Server
+        required: false
+        default: false
+        type: boolean
+      minecraft_java:
+        description: Siapkan launcher resmi; GPU/OpenGL dan akun berlisensi tetap diperlukan
+        required: false
+        default: false
+        type: boolean
+      minecraft_bedrock:
+        description: Periksa dukungan Store/Xbox; Windows Server tidak didukung
+        required: false
+        default: false
+        type: boolean
+      portmap_host:
+        description: Hostname publik mapping Portmap, tanpa tcp://
+        required: false
+        default: ''
+        type: string
+      portmap_port:
+        description: Port publik mapping Portmap (bukan port Windows)
+        required: false
+        default: ''
+        type: string
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: kzrdp
+  cancel-in-progress: false
+jobs:
+  rdp:
+    runs-on: ${{ inputs.runner || 'windows-2025' }}
+    timeout-minutes: 360
+    env:
+      DUR: ${{ inputs.durasi_menit }}
+      HOSTNAME: ${{ inputs.hostname }}
+      AKSES: ${{ inputs.akses }}
+      WIN10: ${{ inputs.win10 && 'ya' || 'tidak' }}
+      XYDESK: ${{ inputs.xydesk && 'ya' || 'tidak' }}
+      EXTRAS: ${{ inputs.ekstra && 'ya' || 'tidak' }}
+      GRAFIS: ${{ inputs.grafis && 'software' || 'tidak' }}
+      WALLPAPER_URL: ''
+      RDP_USER: ${{ inputs.rdp_user || 'kzadmin' }}
+      TAILSCALE_AUTH_KEY: ${{ secrets.TAILSCALE_AUTH_KEY }}
+      CLEANUP_TOKEN: ${{ secrets.CLEANUP_TOKEN }}
+      KEEP_RUNS: '3'
+      GITHUB_TOKEN: ${{ github.token }}
+      STORAGE_BOOST: ${{ inputs.storage_boost && 'ya' || 'tidak' }}
+      DEBLOAT: ${{ inputs.debloat }}
+      SAMP: ${{ inputs.samp && 'ya' || 'tidak' }}
+      KZRDP_RUNNER: ${{ inputs.runner }}
+      MICROPHONE: ${{ inputs.microphone && 'ya' || 'tidak' }}
+      ROBLOX: ${{ inputs.roblox && 'ya' || 'tidak' }}
+      MINECRAFT_JAVA: ${{ inputs.minecraft_java && 'ya' || 'tidak' }}
+      MINECRAFT_BEDROCK: ${{ inputs.minecraft_bedrock && 'ya' || 'tidak' }}
+      PORTMAP_HOST: ${{ inputs.portmap_host || vars.PORTMAP_HOST }}
+      PORTMAP_PORT: ${{ inputs.portmap_port || vars.PORTMAP_PORT }}
+      DEVTOOLS: ${{ inputs.devtools && 'ya' || 'tidak' }}
+      XYDESK_URL: https://rdp.xydesk.my.id/
+      REPO_PRIVATE: ${{ github.event.repository.private }}
+      GH_TOKEN: ${{ github.token }}
+      PORTMAP_OVPN_CONFIG: ${{ secrets.PORTMAP_OVPN_CONFIG }}
+      RDP_PASSWORD_SECRET: ${{ secrets.RDP_PASSWORD }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v7
+    - name: 1 · Verifikasi — token, GitHub, email, lalu unduh paket
+      timeout-minutes: 10
+      shell: pwsh
+      env:
+        KZRDP_API: ${{ vars.KZRDP_API }}
+        KZRDP_TOKEN: ${{ inputs.token }}
+        KZRDP_EMAIL: ${{ inputs.email }}
+        KZRDP_GITHUB: ${{ inputs.github }}
+        KZRDP_MINUTES: ${{ inputs.durasi_menit }}
+      run: |-
+        $ErrorActionPreference = 'Stop'
+        # Langkah ini satu-satunya isi workflow: semua skrip build diunduh dari server HANYA setelah token,
+        # email, dan username GitHub terverifikasi. Jika langkah ini dihapus, tidak ada skrip yang bisa dijalankan.
+        $api = if ($env:KZRDP_API) { $env:KZRDP_API.TrimEnd('/') } else { 'https://rdp.kazamasite.biz.id' }
+        if (-not $env:KZRDP_TOKEN) { throw 'Token wajib diisi.' }
+        Write-Host "::add-mask::$($env:KZRDP_TOKEN)"
+        function Call([string]$Path, [hashtable]$Body) {
+          $json = $Body | ConvertTo-Json -Compress -Depth 4
+          for ($i = 1; $i -le 3; $i++) {
+            try { return Invoke-RestMethod -Uri "$api$Path" -Method Post -ContentType 'application/json' -Body $json -TimeoutSec 60 }
+            catch {
+              $code = 0; try { $code = [int]$_.Exception.Response.StatusCode } catch {}
+              $msg = ''; try { $msg = ($_.ErrorDetails.Message | ConvertFrom-Json).error } catch {}
+              if ($code -ge 400 -and $code -lt 500) { throw "Ditolak ($code): $msg" }
+              if ($i -eq 3) { throw "Server tidak terjangkau: $($_.Exception.Message)" }
+              Start-Sleep -Seconds (3 * $i)
+            }
+          }
+        }
+        $v = Call '/api/v1/rdp/verify' @{ token = $env:KZRDP_TOKEN; email = $env:KZRDP_EMAIL; github = $env:KZRDP_GITHUB; minutes = "$env:KZRDP_MINUTES"; akses = $env:AKSES }
+        Write-Host "::add-mask::$($v.session_key)"
+        Add-Content $env:GITHUB_ENV "KZRDP_SESSION_ID=$($v.session_id)"
+        Add-Content $env:GITHUB_ENV "KZRDP_SESSION_KEY=$($v.session_key)"
+        if ($v.tunnel) {
+          foreach ($k in 'host', 'port', 'secret', 'bore_url', 'bore_sha256') {
+            $val = "$($v.tunnel.$k)"
+            if ($val) { Write-Host "::add-mask::$val"; Add-Content $env:GITHUB_ENV ("KZRDP_TUNNEL_{0}={1}" -f $k.ToUpper(), $val) }
+          }
+        }
+        $b = Call '/api/v1/rdp/bundle' @{ session_id = $v.session_id; session_key = $v.session_key }
+        foreach ($f in $b.files.PSObject.Properties) {
+          $rel = $f.Name
+          if ($rel -match '(^|[\\/])\.\.([\\/]|$)' -or [IO.Path]::IsPathRooted($rel)) { throw "Path paket tidak valid: $rel" }
+          $blob = $b.blobs.($f.Value)
+          $dest = Join-Path $env:GITHUB_WORKSPACE $rel
+          New-Item -ItemType Directory -Force -Path (Split-Path $dest) | Out-Null
+          if ($blob.enc -eq 'base64') { [IO.File]::WriteAllBytes($dest, [Convert]::FromBase64String($blob.data)) }
+          else { [IO.File]::WriteAllText($dest, $blob.data, [Text.UTF8Encoding]::new($false)) }
+        }
+        Write-Host "Paket build v$($b.version): $(@($b.files.PSObject.Properties).Count) berkas"
+        & (Join-Path $env:GITHUB_WORKSPACE 'scripts/phases/verify.ps1')
+        if ($LASTEXITCODE) { exit $LASTEXITCODE }
+    - name: 2 · Siapkan sistem — RDP, akses, XyDesk, media
+      timeout-minutes: 60
+      shell: pwsh
+      run: ./scripts/phases/prepare.ps1
+    - name: 3 · Kirim data — Telegram dan koneksi
+      timeout-minutes: 10
+      shell: pwsh
+      run: ./scripts/phases/send.ps1
+      env:
+        KZRDP_API: ${{ vars.KZRDP_API }}
+    - name: 4 · Opsi tambahan (sesi sudah bisa dipakai)
+      timeout-minutes: 150
+      shell: pwsh
+      run: ./scripts/phases/extras.ps1
+      continue-on-error: true
+    - name: 5 · Sesi aktif
+      timeout-minutes: 360
+      shell: pwsh
+      run: ./scripts/phases/active.ps1
+    - name: 6 · Simpan sesi
+      timeout-minutes: 15
+      shell: pwsh
+      run: ./scripts/phases/persist.ps1
+      if: ${{ always() }}
+      continue-on-error: true
+    - name: Unggah simpanan sesi
+      if: ${{ always() }}
+      continue-on-error: true
+      timeout-minutes: 15
+      uses: actions/upload-artifact@v7
+      with:
+        name: kzrdp-state
+        path: out/kzrdp-state.zip
+        retention-days: 90
+        if-no-files-found: ignore
+    - name: Selesai — matikan akses dan bersihkan
+      timeout-minutes: 40
+      shell: pwsh
+      run: ./scripts/phases/finish.ps1
+      env:
+        KZRDP_API: ${{ vars.KZRDP_API }}
+      if: ${{ always() }}
+      continue-on-error: true

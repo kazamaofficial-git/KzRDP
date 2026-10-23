@@ -1,0 +1,220 @@
+/* KzRDP — tema hitam + ungu (Kazama Tech). Dimuat setelah globals.css sehingga menimpa warna dasar. */
+:root{
+  --bg:#07050b;--surface:#0e0a17;--surface-2:#150f23;--line:#261b3d;--line-strong:#3a2a5c;
+  --text:#f1edfb;--muted:#a79fbd;--violet:#8b5cf6;--violet-soft:#a78bfa;--fuchsia:#d946ef;
+  --grad:linear-gradient(135deg,#8b5cf6 0%,#c026d3 100%);
+  --glow:0 10px 40px -8px #8b5cf666;--radius:18px;
+  --font:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+html{color-scheme:dark;scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(60% 40% at 15% -5%,#8b5cf622,transparent 70%),radial-gradient(45% 35% at 100% 10%,#c026d31a,transparent 70%);
+  background-attachment:fixed;
+}
+::selection{background:#8b5cf688;color:#fff}
+*{scrollbar-width:thin;scrollbar-color:#3a2a5c transparent}
+h1,h2,h3{font-family:var(--font);letter-spacing:-.02em;color:var(--text)}
+p{color:var(--muted)}
+a{transition:color .15s}
+
+/* Tombol */
+button,.button{border-radius:12px;font-family:var(--font);font-weight:650;letter-spacing:.005em;transition:transform .18s,box-shadow .18s,background .18s,border-color .18s}
+.button,button:not(.secondary):not(.icon-button):not(.select-trigger):not(.file-row):not(.menu-toggle):not(.danger-button):not(.mobile-menu-close):not(.tutorial-toggle):not(.language-switcher button){
+  background:var(--grad);color:#fff;box-shadow:0 6px 24px -8px #a855f799,inset 0 1px 0 #ffffff33}
+a.button:not(.secondary):not(.danger-button){background:var(--grad);color:#fff}
+.button:hover,button:not(:disabled):not(.secondary):not(.icon-button):not(.select-trigger):not(.file-row):not(.menu-toggle):not(.language-switcher button):hover{transform:translateY(-1px);box-shadow:var(--glow),inset 0 1px 0 #ffffff44}
+.secondary,a.button.secondary{background:#ffffff08;color:var(--text);border:1px solid var(--line-strong);box-shadow:none}
+.secondary:hover,a.button.secondary:hover{background:#8b5cf61f;border-color:var(--violet);transform:translateY(-1px)}
+button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--violet-soft);outline-offset:3px}
+.danger-button{background:#2a0f1c;color:#ff9db6;border:1px solid #5b1f38}
+
+/* Permukaan */
+.card,.setup-block,.support-panel,.community-link,.page-guide,.template-preview,.credential-grid>*,.game-grid .card,.repo-danger{
+  background:linear-gradient(180deg,#140e22cc,#0d0916cc);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:0 1px 0 #ffffff0a inset,0 20px 50px -30px #000;backdrop-filter:blur(10px)}
+.card:hover,.community-link:hover{border-color:var(--line-strong)}
+.connection{background:#8b5cf612;border:1px solid #8b5cf650;border-radius:14px}
+.success,.setup-ready{color:#c4b5fd}
+.error{color:#ff9db6}
+pre,code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+pre{background:#05030a;border:1px solid var(--line);border-radius:14px}
+.row,.credential-line,.file-row{border-color:var(--line)}
+
+/* Form */
+input,select,textarea{background:#0a0713;border:1px solid var(--line-strong);border-radius:12px;color:var(--text);font-family:var(--font);transition:border-color .15s,box-shadow .15s}
+input:focus,select:focus,textarea:focus{border-color:var(--violet);box-shadow:0 0 0 4px #8b5cf62e;outline:none}
+.select-options{background:#120c1f;border:1px solid var(--line-strong);border-radius:14px;box-shadow:0 24px 60px -10px #000}
+.select-options button:hover,.select-options button:focus,.select-options [aria-selected=true]{background:#8b5cf626;color:#e9defd}
+.input-tools{background:#0a0713;border-color:var(--line-strong)}
+.segmented button[aria-pressed=true],.steps .current,.onboarding-progress .current{background:#8b5cf630;color:#e9defd;border-color:var(--violet)}
+
+/* Header / navigasi */
+.workspace-header{position:sticky;top:0;z-index:40;background:#07050bcc;backdrop-filter:blur(16px) saturate(140%);border-bottom:1px solid var(--line)}
+.brand{display:inline-flex;align-items:center;gap:10px;color:var(--text);font-weight:750;letter-spacing:-.02em}
+.brand b{background:linear-gradient(90deg,#fff,#c4b5fd);-webkit-background-clip:text;background-clip:text;color:transparent}
+.workspace-menu nav a{color:var(--muted);border-radius:10px;transition:background .15s,color .15s}
+.workspace-menu nav a:hover{color:var(--text);background:#ffffff0a}
+.workspace-menu nav a[aria-current=page]{color:#fff;background:#8b5cf62a;box-shadow:inset 0 0 0 1px #8b5cf655}
+.mobile-overlay{background:#07050bf2;color:var(--text)}
+.mobile-menu-links a{border-color:var(--line)}
+.mobile-menu-links a[aria-current=page]{color:var(--violet-soft)}
+.language-switcher{background:#0e0a17ee;border-color:var(--line-strong);backdrop-filter:blur(10px)}
+.language-switcher button[aria-pressed=true]{background:var(--grad);color:#fff}
+.profile-identity .profile-initial{background:var(--grad);color:#fff}
+
+/* Eyebrow = pill */
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid #8b5cf655;border-radius:999px;background:#8b5cf614;color:#c4b5fd;font-size:11px;font-weight:650;letter-spacing:.14em}
+.hero-orbital .eyebrow{font-size:11px;letter-spacing:.14em;color:#c4b5fd}
+
+/* Hero */
+.hero-orbital{border:1px solid var(--line);border-radius:28px;padding:72px 48px;
+  background:radial-gradient(60% 80% at 90% 20%,#8b5cf633,transparent 65%),radial-gradient(40% 60% at 0% 100%,#c026d322,transparent 70%),linear-gradient(160deg,#0f0a1a,#07050b 75%);
+  box-shadow:0 40px 100px -50px #8b5cf6aa,inset 0 1px 0 #ffffff12}
+.hero-orbital h1{font-size:clamp(42px,6vw,76px);line-height:1.02;letter-spacing:-.045em;font-weight:800;margin:22px 0 18px}
+.hero-orbital h1 span{background:linear-gradient(95deg,#c4b5fd 0%,#a855f7 45%,#e879f9 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-orbital .hero-copy>p{font-size:18px;max-width:520px}
+.hero-orbital .github-cta{box-shadow:0 10px 36px -10px #a855f7cc,inset 0 1px 0 #ffffff33}
+.github-cta svg{fill:currentColor}
+
+/* Visual hero (CSS saja, tanpa gambar) */
+.hero-visual{position:relative;min-width:0;height:430px;pointer-events:none;user-select:none;display:grid;place-items:center}
+.hv-glow{position:absolute;inset:8% 0;background:radial-gradient(closest-side,#8b5cf655,transparent 72%);filter:blur(24px)}
+.hv-card{position:relative;width:min(100%,340px);border:1px solid var(--line-strong);border-radius:22px;padding:18px 20px 20px;
+  background:linear-gradient(180deg,#1a1230ee,#0b0714ee);box-shadow:0 40px 80px -30px #000,0 0 0 1px #ffffff08 inset,0 0 60px -20px #8b5cf6;transform:rotate(-3deg);animation:hv-float 8s ease-in-out infinite}
+.hv-bar{display:flex;align-items:center;gap:6px;margin-bottom:16px}
+.hv-bar i{width:9px;height:9px;border-radius:50%;background:#3a2a5c}.hv-bar i:first-child{background:#c026d3}.hv-bar i:nth-child(2){background:#8b5cf6}
+.hv-bar span{margin-left:auto;font:12px ui-monospace,Menlo,monospace;color:var(--muted)}
+.hv-timer small{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.hv-timer strong{display:block;font:800 44px/1.1 ui-monospace,Menlo,monospace;letter-spacing:-.04em;background:linear-gradient(90deg,#fff,#c4b5fd);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hv-progress{height:6px;border-radius:99px;background:#ffffff10;margin:14px 0 18px;overflow:hidden}
+.hv-progress span{display:block;width:92%;height:100%;border-radius:99px;background:var(--grad);box-shadow:0 0 14px #a855f7}
+.hv-card ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.hv-card li{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:#ffffff05;font-size:13px}
+.hv-card li span{color:var(--muted)}.hv-card li b{font-weight:600;color:var(--text)}
+.hv-status{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:12px;color:#c4b5fd}
+.hv-status i{width:8px;height:8px;border-radius:50%;background:#a78bfa;box-shadow:0 0 0 4px #a78bfa33,0 0 12px #a78bfa}
+.hv-chip{position:absolute;display:grid;place-items:center;width:56px;height:56px;border-radius:17px;border:1px solid var(--line-strong);background:linear-gradient(135deg,#2a1d4acc,#0e0a17ee);box-shadow:0 18px 40px -12px #000,0 0 30px -8px #8b5cf6;animation:hv-float 7s ease-in-out infinite}
+.hv-chip svg{width:26px;height:26px;stroke:#d8c8ff;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.hv-chip-a{left:2%;top:12%;animation-delay:-2s}.hv-chip-b{right:2%;bottom:10%;animation-delay:-4s}
+@keyframes hv-float{0%,100%{translate:0 0}50%{translate:0 -10px}}
+@media(prefers-reduced-motion:reduce){.hv-card,.hv-chip{animation:none}}
+
+/* Fitur */
+.feature-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:28px 0 0}
+.feature-grid article{padding:24px;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(180deg,#140e22b3,#0b0713b3);transition:transform .2s,border-color .2s,box-shadow .2s}
+.feature-grid article:hover{transform:translateY(-3px);border-color:#8b5cf688;box-shadow:0 24px 50px -28px #8b5cf6}
+.feature-icon{display:grid;place-items:center;width:42px;height:42px;margin-bottom:16px;border-radius:13px;color:#fff;background:var(--grad);box-shadow:0 10px 24px -8px #a855f7}
+.feature-icon svg{width:22px;height:22px}
+.feature-grid h3{margin:0 0 8px;font-size:17px}.feature-grid p{margin:0;font-size:14px}
+
+/* Langkah, marquee, tutorial, komunitas */
+.landing-steps article{background:linear-gradient(180deg,#140e22b3,#0b0713b3);border:1px solid var(--line);border-radius:var(--radius)}
+.landing-steps article:hover{border-color:#8b5cf688;box-shadow:0 24px 50px -28px #8b5cf6}
+.landing-steps span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800}
+.brand-tile{color:#cfc6e6}.brand-tile img{filter:brightness(0) invert(.85) sepia(.2) hue-rotate(220deg)}
+.tutorial-placeholder,.tutorial-player{background:#0c0814;border:1px solid var(--line);border-radius:20px}
+.community-metrics strong{color:#fff}.community-metrics i{background:#a78bfa;box-shadow:0 0 12px #a78bfa}
+.github-support a{background:#ffffff06;border:1px solid var(--line);border-radius:14px}
+.github-support a:hover{border-color:var(--violet);background:#8b5cf61a}
+.support-heading h2{letter-spacing:-.03em}
+footer{color:#7d7494;border-top:1px solid var(--line);margin-top:56px}
+
+@media(max-width:900px){.feature-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-orbital{padding:48px 28px}}
+@media(max-width:640px){
+  .feature-grid{grid-template-columns:1fr}
+  .hero-orbital{padding:28px 20px 32px;border-radius:22px}
+  .hero-orbital h1{font-size:44px}
+  .hero-visual{order:-1;height:300px;width:100%;margin-bottom:8px}.hv-card{transform:rotate(-2deg) scale(.9)}.hv-chip{width:44px;height:44px;border-radius:13px}
+}
+
+/* Checkbox opsi sesi (halaman Settings) */
+.toggle-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 22px;margin:22px 0 6px;padding:18px 20px;border:1px solid var(--line);border-radius:14px;background:#ffffff04}
+.toggle-grid legend{padding:0 8px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#c4b5fd}
+.toggle-item{margin:0;padding:8px 10px;border-radius:10px;cursor:pointer;transition:background .15s}
+.toggle-item:hover{background:#8b5cf614}
+.toggle-item input[type=checkbox]{width:18px;min-width:18px;height:18px;margin:2px 0;accent-color:#8b5cf6;box-shadow:none}
+@media(max-width:640px){.toggle-grid{grid-template-columns:1fr}}
+
+/* Ikon pada kotak teknologi */
+.brand-tile{display:inline-flex;align-items:center;gap:12px}
+.brand-tile img{width:28px;height:28px;object-fit:contain;opacity:.9}
+
+/* Banner Kazama Tech */
+.credit-banner{margin:56px auto 0;text-align:center}
+.credit-card{max-width:760px;margin:0 auto;padding:18px 26px;border-radius:24px;background:#fff;box-shadow:0 30px 80px -34px #8b5cf6,0 0 0 1px #ffffff22}
+.credit-card img{display:block;width:100%;height:auto}
+.credit-banner p{margin:16px 0 0;font-size:13px}
+.credit-banner strong{color:var(--text)}
+
+/* Tombol bahasa: tidak boleh menutupi konten di layar kecil */
+@media(max-width:1100px){
+  .global-language{position:static;display:flex;justify-content:center;padding:18px 16px 28px}
+}
+
+/* Perbaikan tampilan mobile */
+img,svg,video,canvas,iframe{max-width:100%}
+main :where(div,section,article,form,li,label){min-width:0}
+@media(max-width:900px){
+  .hero-orbital{grid-template-columns:minmax(0,1fr)}
+  .landing-steps{grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:640px){
+  html,body{max-width:100%}
+  main{padding-left:16px;padding-right:16px;margin-top:24px;overflow-x:clip}
+  .workspace-header{padding:12px 16px;gap:12px}
+  .brand b{font-size:17px}
+  h1{font-size:clamp(30px,9vw,40px);letter-spacing:-.03em}
+  h2{font-size:clamp(22px,6.5vw,28px)}
+  .card,.setup-block,.support-panel,.community-link,.template-preview,.page-guide{padding:18px;border-radius:16px}
+  [class*="-grid"]{grid-template-columns:minmax(0,1fr)!important}
+  .actions{flex-direction:column;align-items:stretch}
+  .actions>*,.actions .button{width:100%;justify-content:center;text-align:center}
+  button,.button{min-height:46px}
+  input,select,textarea{font-size:16px;min-height:46px}
+  pre,code{max-width:100%;overflow-x:auto;white-space:pre-wrap;overflow-wrap:anywhere}
+  table{display:block;max-width:100%;overflow-x:auto}
+  .row{flex-direction:column;align-items:flex-start;gap:6px}
+  .hero-orbital .hero-copy>p{font-size:16px}
+  .credit-card{padding:12px 14px;border-radius:18px}
+  .credit-banner{margin-top:40px}
+}
+
+/* Tombol nonaktif harus terlihat nonaktif */
+button:disabled,.button[aria-disabled=true]{opacity:.45;cursor:not-allowed;box-shadow:none!important;transform:none!important;filter:grayscale(.35)}
+
+/* QRIS */
+.qris-card{max-width:360px;margin:26px auto 0;text-align:center}
+.qris-frame{padding:14px;border-radius:22px;background:#fff;box-shadow:0 30px 80px -34px #8b5cf6,0 0 0 1px #ffffff22}
+.qris-frame img{display:block;width:100%;height:auto;border-radius:12px}
+.support-section .github-support{margin-top:22px}
+
+#bantuan,#dukungan,#panduan{scroll-margin-top:90px}
+
+/* Banner transparan (teks putih) langsung di latar gelap */
+.credit-card{background:none;box-shadow:none;padding:0}
+.credit-card img{filter:drop-shadow(0 18px 40px #8b5cf655)}
+
+/* Halaman Token + status mentah */
+code[data-state]{display:inline-block;padding:3px 12px;border-radius:999px;background:#8b5cf624;border:1px solid #8b5cf655;font-size:.85em}
+code[data-state=failed],code[data-state=cancelled]{background:#ff9db61a;border-color:#ff9db655}
+.token-code{display:block;margin:14px 0;padding:18px;border:1px dashed var(--line-strong);border-radius:14px;background:#05030a;font-size:clamp(17px,5vw,24px);letter-spacing:.08em;text-align:center;overflow-wrap:anywhere;user-select:all}
+
+/* Dashboard di layar kecil */
+.select-options{max-width:calc(100vw - 32px)}
+.card h2,.setup-block h2{overflow-wrap:anywhere}
+@media(max-width:640px){
+  .credential-line{flex-wrap:wrap}
+  .credential-line code{flex:1 1 100%}
+  .onboarding-progress li{flex:1 1 calc(50% - 8px)}
+  .workflow-steps li span{display:block;max-width:100%}
+  .workflow-steps b{float:none;display:inline-block;margin-top:4px}
+  .guide-list li{padding:10px}
+  .page-guide{margin-bottom:16px}
+  .hero-orbital h1 span{display:inline}
+}
+
+/* Pilihan cepat durasi */
+.chip-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 4px}
+.chip{padding:7px 14px;min-height:36px;border-radius:999px;font-size:13px;font-weight:600}
+.chip.on{background:var(--grad)!important;color:#fff!important;border-color:transparent!important}

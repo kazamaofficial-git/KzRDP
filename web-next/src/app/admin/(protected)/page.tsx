@@ -1,0 +1,4 @@
+
+import {T} from "@/components/locale-provider";
+import Console from "@/components/dashboard/rdp-console";
+export default function Page(){return <><span className="eyebrow">Private / Admin</span><h1><T text={"Kontrol KzRDP."}/></h1><Console/></>}

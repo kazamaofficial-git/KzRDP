@@ -1,0 +1,15 @@
+{
+  "name": "kzrdp",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-10-10",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
+  // ISI SENDIRI sebelum deploy: account_id Cloudflare, domain, dan database D1 milik Kazama Tech.
+  "account_id": "5d900ff827d935325eddede7410032fc",
+  "routes": [{ "pattern": "rdp.kazamasite.biz.id", "custom_domain": true }],
+  "workers_dev": false,
+  "preview_urls": false,
+  "d1_databases": [
+    { "binding": "DB", "database_name": "kzrdp-state", "database_id": "595c23f1-2728-4880-985a-ca8c8ee5a9a6" }
+  ]
+}
