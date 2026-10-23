@@ -61,5 +61,93 @@
     "microphone": "rdp_capture_enabled",
     "verification": "Login ulang, aktifkan mic di XyDesk dan izinkan Android. Uji Windows Settings > Sound > Input; kebijakan aktif bukan bukti capture end-to-end.",
     "audio_output": "rdp_playback_enabled"
+  },
+  "storage": {
+    "boost": "ok",
+    "before_gb": 31.04,
+    "after_gb": 36.6,
+    "gained_gb": 5.56,
+    "removed_targets": 22,
+    "drives": [
+      {
+        "free_gb": 36.6,
+        "used_gb": 113.28,
+        "letter": "C",
+        "size_gb": 149.89
+      },
+      {
+        "free_gb": 147.01,
+        "used_gb": 2.99,
+        "letter": "D",
+        "size_gb": 150.0
+      }
+    ],
+    "game_dir": "D:\\Games (disarankan untuk GTA)",
+    "note": "Cleanup selesai. gained_gb adalah perubahan ruang aktual, bukan kapasitas yang dijanjikan. Target terkunci bisa tersisa."
+  },
+  "win10": {
+    "look": "ok",
+    "badge": "ok",
+    "wallpaper": "ok",
+    "search": "ok",
+    "os": "Microsoft Windows Server 2025 Datacenter",
+    "note": "Tampilan Windows 10 (UI Windows Server 2022 = kernel/UI Windows 10 21H2)"
+  },
+  "grafis": {
+    "mode": "toolkit_only",
+    "adapters": "Microsoft Hyper-V Video",
+    "note": "Optional isolated CPU renderer files; not activated or benchmarked.",
+    "mesa": "26.2.4"
+  },
+  "samp": {
+    "netfx3": "Enabled",
+    "note": "DirectX legacy diverifikasi x86/x64. GTA SA dan SA-MP dipasang manual dari sumber sah. Game, GPU, dan koneksi server belum diuji.",
+    "directplay": "Enabled",
+    "play_tested": false,
+    "vcredist": "verified_x86_x64_and_2013_x86",
+    "directx": "verified_x86_x64",
+    "gta_installed": false,
+    "samp_installed": false,
+    "status": "dependencies_ready"
+  },
+  "games": {
+    "roblox": {
+      "note": "Roblox mensyaratkan Windows 10/11 desktop 64-bit dan dukungan GPU. Windows Server runner bukan target yang didukung; memasang DX9 tidak mengubah ini.",
+      "status": "unsupported_environment"
+    },
+    "samp": {
+      "status": "dependencies_ready",
+      "note": "DirectX legacy diverifikasi x86/x64. GTA SA dan SA-MP dipasang manual dari sumber sah. Game, GPU, dan koneksi server belum diuji.",
+      "game_dir": null,
+      "gta_installed": false,
+      "samp_installed": false
+    },
+    "minecraft_java": {
+      "compatibility": "Launcher resmi mengelola runtime Java. Akun berlisensi dan dukungan OpenGL/GPU tetap diperlukan.",
+      "status": "installer_ready",
+      "note": "Buka installer di sesi Windows, login dengan akun berlisensi, lalu uji game. Belum berarti game sudah berjalan.",
+      "path": "C:\\Users\\Public\\Desktop\\KzRDP Installers\\MinecraftInstaller.msi"
+    },
+    "minecraft_bedrock": {
+      "note": "Bedrock membutuhkan Windows desktop dengan Microsoft Store/Xbox. Windows Server bukan target yang didukung setup ini.",
+      "status": "unsupported_environment"
+    }
+  },
+  "game_environment": {
+    "windows_server": true,
+    "hypervisor_present": true,
+    "runner": "windows-2025",
+    "play_tested": false,
+    "os": "Microsoft Windows Server 2025 Datacenter"
+  },
+  "host_tools": {
+    "winrar": "verified 7.23.0 (vendor trial; license not included)",
+    "vcredist": "verified_current_v14_x86_x64",
+    "xampp": "failed",
+    "firewall7777": "verified_TCP_UDP_inbound_rules; not_public_forwarding",
+    "errors": [
+      "XAMPP: Installer exit=1"
+    ],
+    "public_port": false
   }
 }
