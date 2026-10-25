@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "blakejs": "^1.2.1",
-    "next": "^15.5.27",
+    "next": "^16.4.3",
     "next-auth": "^4.24.15",
     "react": "19.2",
     "react-dom": "19.2",
